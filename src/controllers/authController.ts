@@ -13,7 +13,7 @@ const authService = new AuthService();
       const user = await authService.findUserByUsername(username);
       if (!user) return res.status(400).json({ message: 'User not found' });
   
-      if (user.password === password || (await bcrypt.compare(password, user.password))) {
+      if (user.password !== password || (await bcrypt.compare(password, user.password))) {
         return res.status(400).json({ message: 'Invalid password' });
       }
       
