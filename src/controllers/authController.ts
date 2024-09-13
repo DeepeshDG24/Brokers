@@ -13,11 +13,12 @@ const authService = new AuthService();
       const user = await authService.findUserByUsername(username);
       if (!user) return res.status(400).json({ message: 'User not found' });
   
-      const validPassword = await bcrypt.compare(password, user.password);
-      if (!validPassword) return res.status(400).json({ message: 'Invalid password' });
+      if (user.password === password || (await bcrypt.compare(password, user.password))) {
+        return res.status(400).json({ message: 'Invalid password' });
+      }
       
       const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET as string, { expiresIn: '23h' });
-      return res.json({ token });
+      return res.json({ success: true, data: {user ,token} });
     } catch (error) {
       return res.status(500).json({ message: 'Server error', error });
     }

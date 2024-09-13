@@ -3,6 +3,7 @@ import express from 'express';
 import { AppDataSource } from './config/database';
 import router from './routes/routes';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -15,6 +16,11 @@ AppDataSource.initialize()
   });
 
 const app = express();
+
+app.use(cors({ origin:'http://localhost:65205',
+// Replace with the origin of your frontend application
+methods:'GET,HEAD,PUT,PATCH,POST,DELETE',credentials: true, }));
+
 app.use(express.json());
 
 app.use('/api', router);
