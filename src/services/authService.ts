@@ -41,12 +41,8 @@ export class AuthService {
     try {
 
         // Get report details and embed token
-        const embedParams = await getEmbedParamsForSingleReport(
-          "e8928c2a-3e8d-4130-b2da-ed63e9b95048",
-          //  || config.workspaceId,
-           "104a9b62-f4e4-47be-85e9-af6cff41112a"
-          //  || config.reportId);
-        );
+        const embedParams = await getEmbedParamsForSingleReport(config.workspaceId,config.reportId);
+        
 
         return {
             'accessToken': embedParams.embedToken.token,
