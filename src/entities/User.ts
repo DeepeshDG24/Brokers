@@ -16,6 +16,9 @@ export class User {
   @Column({type: 'varchar'})
   name: string;
 
+  @Column({ type: 'varchar', unique: true })
+  emailId: string;
+
   @Column({type: 'int'})
   brokerId!: number; // Foreign key to Broker
 }

@@ -1,10 +1,8 @@
 import { Router } from "express";
 import authMiddleware from "../middleware/middleware";
-import { getEmbedToken, login, loginStatus, register } from "../controllers/authController";
+import { getEmbedToken, login, loginStatus } from "../controllers/authController";
 
 const router = Router();
-
-router.post('/register', register);
 
 router.post('/login', login);
 

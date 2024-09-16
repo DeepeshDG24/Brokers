@@ -17,22 +17,13 @@ const authService = new AuthService();
         return res.status(400).json({ message: 'Invalid password' });
       }
       
-      const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET as string, { expiresIn: '23h' });
+      const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET as string || "secretKey", { expiresIn: '23h' });
       return res.json({ success: true, data: {user ,token} });
     } catch (error) {
       return res.status(500).json({ message: 'Server error', error });
     }
   };
 
-  export const register = async (req: Request, res: Response): Promise<Response> => {
-    try {
-      const { username, password, name, brokerId } = req.body;
-      const newUser = await authService.createUser(username, password, name, brokerId);
-      return res.status(201).json(newUser);
-    } catch (error: any) {
-      return res.status(400).json({ message: error.message });
-    }
-  };
 
   export const loginStatus = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -47,6 +38,15 @@ const authService = new AuthService();
 
   export const getEmbedToken = async (req: Request, res: Response): Promise<Response> => {
     try{
+      const userId = (req as any).user.id;
+      const user = await authService.findUserById(userId);
+      if(!user){
+        throw new Error('User not found');
+      }
+      if(!user?.emailId){
+        throw new Error('User not found');
+      }
+
       // Validate whether all the required configurations are provided in config.json
       const configCheckResult = utils.validateConfig();
       if (configCheckResult) {
@@ -55,7 +55,7 @@ const authService = new AuthService();
           });
       }
       // Get the details like Embed URL, Access token and Expiry
-      const result = await authService.getEmbedInfo();
+      const result = await authService.getEmbedInfo(user?.emailId);
 
       // result.status specified the statusCode that will be sent along with the result object
       return res.status(result?.status).send(result);

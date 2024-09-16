@@ -35,13 +35,13 @@ export class AuthService {
     return await this.userRepository.findOneBy({ id: userId });
   }
 
-  async getEmbedInfo() {
+  async getEmbedInfo(userEmailId: string) {
 
     // Get the Report Embed details
     try {
 
         // Get report details and embed token
-        const embedParams = await getEmbedParamsForSingleReport(config.workspaceId,config.reportId);
+        const embedParams = await getEmbedParamsForSingleReport(config.workspaceId, config.reportId, userEmailId);
         
 
         return {
