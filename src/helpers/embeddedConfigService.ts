@@ -86,7 +86,7 @@ async function getRequestHeader() {
     };
 }
 
-async function getEmbedTokenForSingleReportSingleWorkspace(reportId: any, datasetIds: any, targetWorkspaceId: any, userEmailId: string) {
+async function getEmbedTokenForSingleReportSingleWorkspace(reportId: any, datasetIds: any, targetWorkspaceId: any, userEmailId: string, roles: any[]) {
 
     try{
     // Add report id in the request
@@ -114,7 +114,7 @@ async function getEmbedTokenForSingleReportSingleWorkspace(reportId: any, datase
 
     formData['identities'] = [{
         "username": userEmailId,
-        "roles": config.roles,
+        "roles": roles,
         "datasets": datasetIds
     }]
     
@@ -143,7 +143,7 @@ async function getEmbedTokenForSingleReportSingleWorkspace(reportId: any, datase
 }
 
 
-export async function getEmbedParamsForSingleReport(workspaceId: any, reportId: any, userEmailId: string, additionalDatasetId?: any) {
+export async function getEmbedParamsForSingleReport(workspaceId: any, reportId: any, userEmailId: string, roles: any[], additionalDatasetId?: any) {
     const reportInGroupApi = `https://api.powerbi.com/v1.0/myorg/groups/${workspaceId}/reports/${reportId}`;
     const headers: any = await getRequestHeader();
 
@@ -176,7 +176,7 @@ export async function getEmbedParamsForSingleReport(workspaceId: any, reportId: 
     }
 
     // Get Embed token multiple resources
-    reportEmbedConfig.embedToken = await getEmbedTokenForSingleReportSingleWorkspace(reportId, datasetIds, workspaceId, userEmailId);
+    reportEmbedConfig.embedToken = await getEmbedTokenForSingleReportSingleWorkspace(reportId, datasetIds, workspaceId, userEmailId, roles);
 
     return reportEmbedConfig;
 }

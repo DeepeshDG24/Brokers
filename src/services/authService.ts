@@ -4,10 +4,12 @@ import { Broker } from "../entities/Broker";
 import bcrypt from "bcryptjs";
 import { getEmbedParamsForSingleReport } from "../helpers/embeddedConfigService";
 import config from "../../config/config.json";
+import { Role } from "../entities/Role";
 
 export class AuthService {
   private userRepository = AppDataSource.getRepository(User);
   private brokerRepository = AppDataSource.getRepository(Broker);
+  private roleRepository = AppDataSource.getRepository(Role);
 
   async findUserByUsername(username: string) {
     return await this.userRepository.findOne({ where: { username } });
@@ -36,19 +38,25 @@ export class AuthService {
       return await this.userRepository.findOneBy({ id: userId });
     } catch(error) {
        throw error
-    }
-    
+    } 
   }
 
-  async getEmbedInfo(userEmailId: string) {
+  async getRolesById(roleId: number) {
+    try{
+      return await this.roleRepository.findOneBy({ id: roleId });
+    } catch(error) {
+       throw error
+    } 
+  }
+
+  async getEmbedInfo(userEmailId: string, roles: any[]) {
 
     // Get the Report Embed details
     try {
 
         // Get report details and embed token
-        const embedParams = await getEmbedParamsForSingleReport(config.workspaceId, config.reportId, userEmailId);
+        const embedParams = await getEmbedParamsForSingleReport(config.workspaceId, config.reportId, userEmailId, roles);
         
-
         return {
             'accessToken': embedParams.embedToken.token,
             'embedUrl': embedParams.reportsDetail,

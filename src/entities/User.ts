@@ -21,4 +21,7 @@ export class User {
 
   @Column({type: 'int'})
   brokerId!: number; // Foreign key to Broker
+
+  @Column({type: 'int'})
+  roleId!: number; // Foreign key to Role
 }

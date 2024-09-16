@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { AuthService } from "../services/authService";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
 const utils = require(__dirname + "/utils.js");
 
 const authService = new AuthService();
@@ -49,6 +48,14 @@ const authService = new AuthService();
       if(!user?.emailId){
         throw new Error('User not found');
       }
+      if(!user?.roleId){
+        throw new Error('Role not found');
+      }
+
+      const data = await authService.getRolesById(user?.roleId)
+      if(!data?.roles.length){
+        throw new Error('No Roles exists!!');
+      }
 
       // Validate whether all the required configurations are provided in config.json
       const configCheckResult = utils.validateConfig();
@@ -58,7 +65,7 @@ const authService = new AuthService();
           });
       }
       // Get the details like Embed URL, Access token and Expiry
-      const result = await authService.getEmbedInfo(user?.emailId);
+      const result = await authService.getEmbedInfo(user?.emailId, data?.roles);
 
       // result.status specified the statusCode that will be sent along with the result object
       return res.status(result?.status).send(result);
