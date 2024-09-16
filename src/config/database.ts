@@ -3,6 +3,7 @@ import { User } from "../entities/User";
 import { Broker } from "../entities/Broker";
 import dotenv from 'dotenv';
 import path from "path";
+import { Role } from "../entities/Role";
 
 dotenv.config();
 
@@ -12,10 +13,10 @@ export const AppDataSource = new DataSource({
   port: parseInt(process.env.DB_PORT || "5432", 10),
   username: process.env.DB_USERNAME || "postgres",
   password: process.env.DB_PASSWORD || "1234",
-  database: process.env.DB_NAME || "brokers",
+  database: process.env.DB_NAME || "broker",
   synchronize: true,
   logging: false,
-  entities: [User, Broker],
+  entities: [User, Broker, Role],
   // [__dirname + '/../entities/*.ts'],
   // migrations: [__dirname + '/../migrations/*.ts'],
 });
