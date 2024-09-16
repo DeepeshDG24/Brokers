@@ -30,7 +30,10 @@ const authService = new AuthService();
       const userId = (req as any).user.id;
       const user = await authService.findUserById(userId);
       if (!user) return res.status(400).json({ message: 'User not found' });
-      return res.json(user);
+      return res.status(200).json({
+        status: true,
+        data: user
+      });
     } catch (error: any) {
       return res.status(500).json({ message: 'Server error' });
     }

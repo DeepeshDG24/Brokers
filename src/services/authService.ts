@@ -33,11 +33,7 @@ export class AuthService {
 
   async findUserById(userId: number) {
     try{
-      const response = await this.userRepository.findOneBy({ id: userId });
-      return {
-        status: true,
-        data: response
-      }
+      return await this.userRepository.findOneBy({ id: userId });
     } catch(error) {
        throw error
     }
