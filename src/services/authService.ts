@@ -32,7 +32,16 @@ export class AuthService {
   }
 
   async findUserById(userId: number) {
-    return await this.userRepository.findOneBy({ id: userId });
+    try{
+      const response = await this.userRepository.findOneBy({ id: userId });
+      return {
+        status: true,
+        data: response
+      }
+    } catch(error) {
+       throw error
+    }
+    
   }
 
   async getEmbedInfo(userEmailId: string) {
