@@ -4,12 +4,16 @@
 // ----------------------------------------------------------------------------
 
 // Configurations of the embedded reports
-class PowerBiDashboardDetails {
-    constructor(dashboardId, dashboardName, embedUrl) {
-        this.dashboardId = dashboardId;
-        this.dashboardName = dashboardName;
+class PowerBiReportDetails {
+    reportId: any;
+    reportName: any;
+    embedUrl: any;
+
+    constructor(reportId: any, reportName: any, embedUrl: any) {
+        this.reportId = reportId;
+        this.reportName = reportName;
         this.embedUrl = embedUrl;
     }
 }
 
-module.exports = PowerBiDashboardDetails;
+export default PowerBiReportDetails;

@@ -68,7 +68,7 @@ const authService = new AuthService();
       const result = await authService.getEmbedInfo(user?.emailId, data?.roles);
 
       // result.status specified the statusCode that will be sent along with the result object
-      return res.status(result?.status).send(result);
+      return res.status(result?.status || 500).send(result);
 
     } catch (error) {
       console.log(error)

@@ -5,11 +5,15 @@
 
 // Properties for embedding the report 
 class EmbedConfig {
-    constructor(type, reportsDetail, embedToken) {
+    type: any;
+    reportsDetail: any;
+    embedToken: any;
+
+    constructor(type?: any, reportsDetail?: any, embedToken?: any) {
         this.type = type;
         this.reportsDetail = reportsDetail;
         this.embedToken = embedToken;
     }
 }
 
-module.exports = EmbedConfig;
+export default EmbedConfig;

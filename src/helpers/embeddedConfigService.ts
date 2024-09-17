@@ -1,10 +1,17 @@
 // const auth = require(__dirname + "/authentication.js");
-const utils = require(__dirname + "/../controllers/utils.js");
+// const utils = require(__dirname + "/../controllers/utils.ts");
 
-const PowerBiReportDetails = require(__dirname + "/../models/embedReportConfig.js");
-const PowerBiDashboardDetails = require(__dirname + "/../models/embedDashboardConfig.js");
-const EmbedConfig = require(__dirname + "/../models/embedConfig.js");
-import config from "../../config/config.json";
+// const PowerBiReportDetails = require(__dirname + "/../models/embedReportConfig.ts");
+// const PowerBiDashboardDetails = require(__dirname + "/../models/embedDashboardConfig.ts");
+// const EmbedConfig = require(__dirname + "/../models/embedConfig.ts");
+// import config from "../../config/config.json";
+
+// import auth from './authentication';
+import {getAuthHeader} from '../controllers/utils';
+import PowerBiReportDetails from '../models/embedReportConfig';
+import PowerBiDashboardDetails from '../models/embedDashboardConfig';
+import EmbedConfig from '../models/embedConfig';
+import config from '../../config/config.json';
 
 const getAccessToken = async function () {
 
@@ -82,7 +89,7 @@ async function getRequestHeader() {
     const token = tokenResponse.accessToken;
     return {
         'Content-Type': "application/json",
-        'Authorization': utils.getAuthHeader(token)
+        'Authorization': getAuthHeader(token)
     };
 }
 

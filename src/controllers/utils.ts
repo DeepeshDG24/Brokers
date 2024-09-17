@@ -3,10 +3,9 @@
 // Licensed under the MIT license.
 // ----------------------------------------------------------------------------
 
-const config = require('../../config/config.json');
+import config from '../../config/config.json';
 
-
-function getAuthHeader(accessToken) {
+function getAuthHeader(accessToken: any) {
 
     // Function to append Bearer against the Access Token
     return "Bearer ".concat(accessToken);
@@ -77,7 +76,4 @@ function validateConfig() {
     }
 }
 
-module.exports = {
-    getAuthHeader: getAuthHeader,
-    validateConfig: validateConfig,
-}
+export { getAuthHeader, validateConfig };
